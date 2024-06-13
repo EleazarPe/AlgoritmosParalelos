@@ -1,7 +1,9 @@
 package org.example;
 
 import java.io.*;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Main {
     private static String fileName = "testCase3.txt";
@@ -12,6 +14,39 @@ public class Main {
         //escribir();
         temp = leer();
         int [] canthilos = {1,2,4,8,16,32,64,128,256,512};
+        for (int i: canthilos) {
+            ArrayList<Thread> hilos= new ArrayList<>();
+            ArrayList<SumaHilos> runners = new ArrayList<>();
+            long total = 0;
+            long inicio, fin = 0;
+
+            for (ArrayList<Integer> arrayList : dividirArrayList(temp,i)){
+                SumaHilos runs = new SumaHilos(arrayList);
+                runners.add(runs);
+                hilos.add(new Thread(runs));
+            }
+            inicio = System.currentTimeMillis();
+            for (Thread hilo: hilos) {
+                hilo.start();
+            }
+            for (Thread hilo : hilos) {
+                try {
+                    hilo.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            for (SumaHilos ss: runners) {
+                total += ss.getTotal();
+            }
+            //total = runners.parallelStream().mapToLong(SumaHilos::getTotal).sum();
+            fin = System.currentTimeMillis();
+            long tiempoTranscurrido = fin - inicio;
+            NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+            System.out.println("Cantidad e hilos "+i+", El total es: "+ numberFormat.format(total));
+            System.out.println("El tiempo transcurrido es de: "+tiempoTranscurrido+" ms");
+
+        }
 
     }
     public static ArrayList<ArrayList<Integer>> dividirArrayList(ArrayList<Integer> lista, int numero) {
