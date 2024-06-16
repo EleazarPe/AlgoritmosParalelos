@@ -39,7 +39,10 @@ Otro detalle es que la cantidad de tiempo incrementa grandemente en 32 y 64. la 
 
 ## Como correr el programa
 
-Para correr utilizamos la terminal de intellij. Usamos java 21. No tiene ningun argumento
+Para correr utilizamos la terminal de intellij. Usamos java 21. No tiene ningun argumento. Pero se tiene que asegurar de correr directamente en el proyecto y no en el folder. Si se corre en el folder no encontrara el testCase.txt
+
+No: .../{folder}
+Si: .../{folder}/algoritmosParalelos
 
 La corrida real tendra una salida parecida a esta. Los resultados fueron puestos en una tabla para mejor visualizacion.
 
